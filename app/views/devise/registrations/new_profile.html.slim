@@ -1,0 +1,48 @@
+.single-container
+  header.single-header
+    h1.single-header__logo 
+      .single-header__logo__title Camp Blog
+    nav.single-header__progress
+      ol
+        li.single-header__progress__text id="first"
+          会員情報
+          .single-header__progress__round--red
+        li.single-header__progress__text--active
+          プロフィール入力
+          .single-header__progress__round--red
+        li.single-header__progress__text id="end"
+          完了
+          .single-header__progress__round
+.single-main__container__form__frame
+  = form_with model: @profile, url: profiles_path, local: true do |f|
+    = render "devise/shared/error_messages", resource: resource
+    .form-group
+      = f.label :nickname, "ニックネーム"
+      span.form-group__require 必須
+      = f.text_field :nickname, placeholder: "ブログ吾郎", class: 'form-group__input'
+    .form-group
+      = f.label :profile, "プロフィール"
+      = f.text_area :profile, class: 'form-group__input'
+    .form-group
+      = f.label :birthday, "生年月日"
+      .birthday-select-wrap
+        = raw sprintf(f.date_select(:birthday, with_css_classes:'XXXXX', prompt:"--",use_month_numbers:true, start_year:Time.now.year, end_year:1900, date_separator:'%s'),'年','月')+'日'
+      .clearfix
+    .form-group
+      = f.label :site, "サイト"
+      = f.text_field :site, class: 'form-group__input'
+    .form-group
+      = f.label :company, "所属企業"
+      = f.text_field :company, class:'form-group__input'
+    .form-group
+      = f.label :residence, "居住地"
+      = f.text_field :residence, class:'form-group__input'
+    .form-group
+      = f.label :twitter, "TwitterアカウントのURL"
+      = f.text_field :twitter, class:'form-group__input'
+    .form-group
+      = f.label :facebook, "FacebookアカウントのURL"
+      = f.text_field :facebook, class:'form-group__input'
+    .form-group
+      = f.submit '登録', class: "btn-default btn-red"
+    / = render "devise/registrations/registration_footer"

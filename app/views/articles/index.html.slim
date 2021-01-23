@@ -1,0 +1,7 @@
+=" #{$date}にデプロイが成功しました"
+- if user_signed_in?
+    p = "ようこそ#{User.find(current_user.id).profile.nickname}さん"
+    p = link_to "新規記事投稿"
+    p = link_to "ログアウト", destroy_user_session_path, method: "delete"
+- else
+    p = link_to "新規ユーザ登録", new_user_registration_path
