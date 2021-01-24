@@ -10,7 +10,7 @@
     - actionPath = draft_path
     - @article = @draft
 
-#header action="#{actionName}"
+#header action="#{controller.controller_name}##{controller.action_name}" thumbnail=@article.thumbnail
 = form_with model: article, url: actionPath, local: true, id: "article_form" do |f|
     .main-wrapper
         .top-wrapper

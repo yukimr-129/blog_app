@@ -17,6 +17,7 @@
                     - else
                         / = link_to "記事を編集する", edit_draft_path(@article.id) |
                         / = link_to "記事を削除する", draft_path, method: "delete"
+        p = image_tag @article.thumbnail.to_s, alt:@article.thumbnail.to_s
         .article-title = @article.title
         .article-tags
             / - tagModel.each do|t|
