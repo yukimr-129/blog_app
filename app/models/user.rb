@@ -10,4 +10,5 @@ class User < ApplicationRecord
   # end
 
   has_one :profile
+  has_many :articles, dependent: :destroy
 end
