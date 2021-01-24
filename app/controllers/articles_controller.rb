@@ -27,7 +27,12 @@ class ArticlesController < ApplicationController
   end
 
   def update
-
+    unless @article.update(article_params)
+      flash[:notice] = @article.errors.full_messages
+      render :edit
+      return
+    end
+    redirect_to root_url
   end
 
   def destroy
