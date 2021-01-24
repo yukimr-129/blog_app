@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: %i(show edit update)
+  before_action :set_article, only: %i(show edit update destroy)
   def index
   end
 
@@ -36,6 +36,11 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
+    if current_user.id == @article.user_id
+      if @article.destroy
+        redirect_to root_url
+      end
+    end
 
   end
 
