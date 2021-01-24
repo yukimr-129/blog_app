@@ -20,9 +20,9 @@
         p = image_tag @article.thumbnail.to_s, alt:@article.thumbnail.to_s
         .article-title = @article.title
         .article-tags
-            / - tagModel.each do|t|
-            /     - if flag
-            /         = link_to t.tag.name, tag_path(t.tag.id), class: "article-tag"
+            - @article_tag.each do|t|
+                - if flag
+                    = link_to t.name, tag_path(t.id), class: "article-tag"
             /     - else
             /         = link-to t.dtag.name, tag_path(t.dtag.id), class: "article-tag"
         .button-wrapper

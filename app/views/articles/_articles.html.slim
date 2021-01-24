@@ -1,0 +1,14 @@
+.articles-wrapper-article
+    = link_to article_path(article), class:"article-link", data: {"turbolinks": false} do
+        = image_tag article.thumbnail.to_s, alt:"#{article.thumbnail.to_s}"
+        h3.article-title = article.title
+        p.article-abstract = article.abstract
+        p.article-nickname
+            span.nickname = Profile.find_by(user_id: article.user_id).nickname
+            span
+                / span
+                /     i.far.fa-thumbs-up
+                /         span.impressions-like = article.likes.count
+                / span
+                /     i.fas.fa-eye
+                /         span.impressions-watch = article.impressions.size

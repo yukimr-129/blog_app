@@ -1,0 +1,15 @@
+== render "layouts/header"
+
+- if @articles.exists?
+    .index-wrapper
+        h2 = "#{params[:search]}に関連する記事"
+        #hot-article.articles-wrapper
+            - @articles.sort_by{|a| a.created_at}.reverse.each do |article|
+                == render "articles/articles", {article: article}
+- else
+    p 該当する記事はありません
+
+javascript:
+  $(function(){
+    $(".articles-wrapper").css("overflow", "visible");
+  })

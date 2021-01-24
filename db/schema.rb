@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_24_055736) do
+ActiveRecord::Schema.define(version: 2021_01_24_105553) do
 
   create_table "articles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title", null: false
@@ -39,6 +39,21 @@ ActiveRecord::Schema.define(version: 2021_01_24_055736) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
+  create_table "tag_articles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "article_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_tag_articles_on_article_id"
+    t.index ["tag_id"], name: "index_tag_articles_on_tag_id"
+  end
+
+  create_table "tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "firstname", null: false
@@ -55,4 +70,6 @@ ActiveRecord::Schema.define(version: 2021_01_24_055736) do
 
   add_foreign_key "articles", "users"
   add_foreign_key "profiles", "users"
+  add_foreign_key "tag_articles", "articles"
+  add_foreign_key "tag_articles", "tags"
 end
