@@ -11,7 +11,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     @user = User.new(sign_up_params)
     unless @user.valid?
-      flash.naw[:alert] = @user.errors.full_full_messages
+      flash.naw[:alert] = @user.errors.full_messages
       render :new
       return
     end
@@ -31,7 +31,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @profile = Profile.new(profile_params)
     # バリデーションチェック
     unless @profile.valid?
-      flash.naw[:alert] = @profile.errors.full_full_messages
+      flash.naw[:alert] = @profile.errors.full_messages
       render :new_profile
       return
     end

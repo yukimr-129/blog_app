@@ -1,0 +1,33 @@
+- actionName = "#{controller.controller_name}##{controller.action_name}"
+
+/ == render "layouts/header"
+
+- if actionName == "articles#new"
+    - actionPath = articles_path
+- elsif actionName == "articles#edit"
+    - actionPath = article_path
+- elsif actionName == "drafts#edit"
+    - actionPath = draft_path
+    - @article = @draft
+
+#header action="#{actionName}"
+= form_with model: article, url: actionPath, local: true, id: "article_form" do |f|
+    .main-wrapper
+        .top-wrapper
+            label
+                .thumbnail サムネ画像を選択
+                = f.file_field :thumbnail, class: "input-thumb"
+            .input-wrapper
+                = f.text_field :title, placeholder: "タイトル" 
+                = f.text_field :abstract, placeholder: "記事概要"
+                - if actionName == "articles#new"
+                    = f.text_field :tag, placeholder: "タグ"
+                - elsif actionName == "articles#edit" || "drafts#edit"
+                    = f.text_field :tag, placeholder: "タグ", value: @tags
+        .middle-wrapper
+            = f.text_area :body, 'data-provider': :summernote
+        .bottom-wrapper
+            .submit-btn
+                - if actionName == "articles#new"
+                    = f.submit "下書き保存", id:"draft" 
+                = f.submit "投稿する"
