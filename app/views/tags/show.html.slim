@@ -1,0 +1,16 @@
+== render partial: 'layouts/header'
+
+- if @tag_articles.exists?
+    .index-wrapper
+        h2 = "#{@tag.name}に関連する記事"
+        #hot-article.articles-wrapper
+            - @articles.each do |article|
+                == render "articles/articles", {article: article}
+                / = article.title
+- else
+    p 該当する記事はありません
+
+javascript:
+    $(function(){
+        $(".articles-wrapper").css("overflow", "visible");
+    })

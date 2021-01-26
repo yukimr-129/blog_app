@@ -1,0 +1,3 @@
+== render "layouts/header"
+- @user = current_user
+== render "layouts/mypage", {main: Draft, inter: TagDraft, tag: Dtag, column: {model: "draft_id", tag: "dtag_id"}}

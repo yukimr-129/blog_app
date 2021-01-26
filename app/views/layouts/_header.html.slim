@@ -1,0 +1,23 @@
+.header
+    .header-modal
+        - if user_signed_in?
+            / = link_to "マイページ", user_path(current_user.id)
+            = link_to "アカウント編集",  edit_user_registration_path
+            / = link_to "プロフィール編集", edit_profile_path(current_user.id)
+            / = link_to "下書き一覧", drafts_path
+            = link_to "ログアウト", destroy_user_session_path, method: :delete
+        - else
+            = link_to "ログイン", new_user_session_path
+            = link_to "新規登録", new_user_registration_path
+    .header-wrapper
+        .left-wrapper
+            .logo = link_to "BLOG-APP", root_path
+        .right-wrapper
+            = form_with url: search_articles_path, method:"post", local: true, class: "search-field" do |f|
+                = f.text_field :search, placeholder: "\uf002 キーワードで記事検索", class: "fa"
+            - if user_signed_in?
+                = link_to new_article_path, class: "right-wrapper-link" do
+                    icon.fas.fa-edit
+                    | 投稿する
+            #header-modal-button.right-wrapper-link
+                icon.fas.fa-chevron-down

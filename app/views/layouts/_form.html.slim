@@ -1,6 +1,6 @@
 - actionName = "#{controller.controller_name}##{controller.action_name}"
 
-/ == render "layouts/header"
+== render "layouts/header"
 
 - if actionName == "articles#new"
     - actionPath = articles_path
@@ -8,7 +8,7 @@
     - actionPath = article_path
 - elsif actionName == "drafts#edit"
     - actionPath = draft_path
-    - @article = @draft
+    - article = @draft
 
 #header action="#{controller.controller_name}##{controller.action_name}" thumbnail=@article.thumbnail
 = form_with model: article, url: actionPath, local: true, id: "article_form" do |f|
@@ -23,7 +23,7 @@
                 - if actionName == "articles#new"
                     = f.text_field :tag, placeholder: "タグ"
                 - elsif actionName == "articles#edit" || "drafts#edit"
-                    = f.text_field :tag, placeholder: "タグ", value: @tags
+                    = f.text_field :tag, placeholder: "タグ", value: @tag
         .middle-wrapper
             = f.text_area :body, 'data-provider': :summernote
         .bottom-wrapper

@@ -1,0 +1,34 @@
+.mypage-wrapper
+    == render "layouts/mypage-left", {model: @user}
+    .mypage-wrapper-right
+        .title
+            - if controller.controller_name == "users"
+                i.fas.fa-square
+                    投稿した記事
+            - elsif controller.controller_name == "drafts"
+                i.fas.fa-square
+                    下書き一覧
+        .articles
+            - main.where(user_id: @user.id).sort_by{|a| a.created_at}.reverse.each do |a|
+                .article
+                    .tags
+                        i.fas.fa-tags
+                        - inter.where(column[:model] => a.id).each do |t|
+                            - if controller.controller_name == "users"
+                                = link_to tag.find(t.tag_id).name, tag_path(t.tag.id)
+                            - else
+                                = link_to tag.find(t.dtag_id).name, tag_path(t.dtag.id)
+                    - if controller.controller_name == "users"
+                        = link_to a.title, article_path(a), class:"article-title", data: {"turbolinks": false}
+                        .article-info
+                            .impressions
+                                span
+                                    i.far.fa-thumbs-up
+                                        span.impressions-like = a.likes.count
+                                span
+                                    i.fas.fa-eye
+                                        span.impressions-watch = a.impressions.size
+                            .date = a.created_at.strftime("%Y/%m/%d")
+                    - else
+                        = link_to a.title, draft_path(a), class:"article-title", data: {"turbolinks": false}
+ 
