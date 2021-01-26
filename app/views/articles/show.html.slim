@@ -1,7 +1,7 @@
 - flag = controller.controller_name == "articles"
 
 .show-wrapper
-    / == render "layouts/mypage-left", {model: User.find(@article.user_id)}
+    == render "layouts/mypage-left", {model: User.find(@article.user_id)}
     .show-main
         .show-top
             - if @article.created_at == @article.updated_at
@@ -15,8 +15,9 @@
                         '|
                         = link_to "記事を削除する", article_path, method: "delete"
                     - else
-                        / = link_to "記事を編集する", edit_draft_path(@article.id) |
-                        / = link_to "記事を削除する", draft_path, method: "delete"
+                        = link_to "記事を編集する", edit_draft_path(@article.id)
+                        '|
+                        = link_to "記事を削除する", draft_path, method: "delete"
         p = image_tag @article.thumbnail.to_s, alt:@article.thumbnail.to_s
         .article-title = @article.title
         .article-tags

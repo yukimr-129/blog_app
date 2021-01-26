@@ -1,7 +1,15 @@
-=" #{$date}にデプロイが成功しました"
-- if user_signed_in?
-    p = "ようこそ#{User.find(current_user.id).profile.nickname}さん"
-    p = link_to "新規記事投稿", new_article_path
-    p = link_to "ログアウト", destroy_user_session_path, method: "delete"
-- else
-    p = link_to "新規ユーザ登録", new_user_registration_path
+== render "layouts/header"
+
+.index-wrapper
+    .articles_more_read
+        h2 よく読まれている記事
+        #hot-article.articles-wrapper
+            - Article.all.sort_by{|a| a.impressions.size}.reverse.each do |article|
+                == render "articles", {article: article}
+        #read-hot-article.read-more もっと見る
+    .articles_new
+        h2 最新記事
+        #new-article.articles-wrapper
+            - Article.all.sort_by{|a| a.created_at}.reverse.each do |article|
+                == render "articles", {article: article}
+        #read-new-article.read-more もっと見る

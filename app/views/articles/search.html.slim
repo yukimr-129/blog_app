@@ -4,7 +4,7 @@
     .index-wrapper
         h2 = "#{params[:search]}に関連する記事"
         #hot-article.articles-wrapper
-            - @articles.sort_by{|a| a.created_at}.reverse.each do |article|
+            - @articles.each do |article|
                 == render "articles/articles", {article: article}
 - else
     p 該当する記事はありません

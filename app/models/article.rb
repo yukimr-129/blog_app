@@ -5,4 +5,5 @@ class Article < ApplicationRecord
     belongs_to :user
 
     mount_uploader :thumbnail, ImageUploader
+    is_impressionable counter_cache: true
 end

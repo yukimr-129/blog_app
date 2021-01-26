@@ -1,14 +1,27 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: %i(show edit update destroy)
+  impressionist actions: [:show], unique: [:impressionable_id, :ip_address]
+  
   def index
   end
 
   def new
     @article = Article.new
+    @draft = Draft.new
+
+    #通常保存、下書き保存判別フラグ
+    $draft = false
   end
 
   def create
-    @article = Article.new(article_params)
+    #通常保存、下書き保存モデル切り替え
+    if $draft
+      model = {main: Draft,   tag: Dtag, inter: TagDraft,   column: {main: "draft_id",   tag: "dtag_id"}, redirect: drafts_path}
+    else
+      model = {main: Article, tag: Tag,  inter: TagArticle, column: {main: "article_id", tag: "tag_id"},  redirect: root_path}
+    end
+
+    @article = model[:main].new(article_params)
     unless @article.valid?
       flash[:notice] = @article.errors.full_messages
       render :new
@@ -19,11 +32,11 @@ class ArticlesController < ApplicationController
     #タグ保存処理
     tag = params[:article][:tag]
     tag_array(tag).each do |t|
-      unless Tag.find_by(name: t).present?
-        Tag.create(name: t)
+      unless model[:tag].find_by(name: t).present?
+        model[:tag].create(name: t)
       end
-      @tag = Tag.find_by(name: t)
-      TagArticle.create(article_id: @article.id, tag_id: @tag.id)
+      @tag = model[:tag].find_by(name: t)
+      model[:inter].create(model[:column][:main] => @article.id, model[:column][:tag] => @tag.id)
     end
 
     redirect_to root_url
@@ -73,13 +86,17 @@ class ArticlesController < ApplicationController
         redirect_to root_url
       end
     end
+  end
 
+  def set_draft
+    $draft = true
   end
 
   #検索機能
   def search
     return nil if params[:search] == ""
     @articles = Article.where("lower(title) LIKE ? OR lower(body) LIKE ?", "%#{params[:search].downcase}%", "%#{params[:search].downcase}%")
+    @articles = @articles.order(updated_at: :desc)
   end
 
 

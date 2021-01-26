@@ -1,0 +1,33 @@
+.mypage-wrapper-left
+    - if controller.controller_name == "articles" && model.id != current_user.id
+        .writer この記事の筆者
+    = link_to user_path(model) do
+        .user-icon
+            i.fas.fa-user
+        .user-name = model.profile.nickname
+    .user-link
+        -unless model.profile.twitter.blank?
+            = link_to model.profile.twitter do
+                i.fab.fa-twitter
+        - unless model.profile.facebook.blank?
+            = link_to model.profile.facebook do
+                i.fab.fa-facebook
+    .user-profile = model.profile.profile
+    .user-activity
+        span
+            .activities = Article.where(user_id: model.id).count
+            div 投稿数
+        span
+            .activities
+                - views = 0
+                - Article.where(user_id: model).each do |a|
+                    - views += a.impressions.size
+                = views
+            div 閲覧数
+        span
+            .activities
+                - likes = 0
+                - Article.where(user_id: model).each do |a|
+                    - likes += a.likes.count
+                = likes
+            div いいね
