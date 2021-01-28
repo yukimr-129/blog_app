@@ -11,4 +11,11 @@ class User < ApplicationRecord
 
   has_one :profile
   has_many :articles, dependent: :destroy
+
+  has_many :likes, dependent: :destroy
+
+
+  def already_liked?(params)
+    self.likes.exists?(article_id: params, user_id: self.id)
+  end
 end

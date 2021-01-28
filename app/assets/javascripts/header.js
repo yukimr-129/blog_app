@@ -5,7 +5,7 @@ document.addEventListener("turbolinks:load", function(){
       modal.css("display","none");
       $(button).on("click", function(){
         modal.css("display","flex");
-      });
+      }),
       $(document).on("click", function(e){
         if (!$(e.target).closest(".header-modal").length && !$(e.target).closest(button).length) {
           modal.css("display","none");

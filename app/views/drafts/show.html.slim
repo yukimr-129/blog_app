@@ -6,7 +6,7 @@
     / == render "layouts/mypage-left", {model: User.find(@article.user_id)}
     .show-main
         .show-top
-            - if @@draft.created_at == @draft.updated_at
+            - if @draft.created_at == @draft.updated_at
                 .article-date = "#{@draft.created_at.strftime("%Y/%m/%d")}に投稿"
             - else
                 .article-date = "#{@draft.updated_at.strftime("%Y/%m/%d")}に投稿"
@@ -24,19 +24,17 @@
         .article-title = @draft.title
         .article-tags
             - @draft_dtag.each do|t|
-                - if flag
-                    = link_to t.name, tag_path(t.id), class: "article-tag"
-                - else
                     = link-to t.dtag.name, tag_path(t.dtag.id), class: "article-tag"
         .button-wrapper
-            / - if user_signed_in? && flag
-            /     #like_"#{@article.id}".like-button
-            /         == render 'layouts/like', article: @article
-            /     a.twitter-share-button href="https://twitter.com/share?ref_src=twsrc%5Etfw" data-text="#{@article.title}" data-lang="ja" data-show-count="false"
-            /     script async src="https://platform.twitter.com/widgets.js" charset="utf-8"
-            /     span#fb-root
-            /     script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v7.0" nonce="1LcNqGCu"
-            /     span.fb-share-button data-href = request.url data-layout="button" data-size="small" 
-            /         a.fb-xfbml-parse-ignore target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
+            - if user_signed_in? && flag
+                .like-button
+                    div id="like_#{@draft.id}"
+                    == render 'layouts/like', article: @draft
+                a.twitter-share-button href="https://twitter.com/share?ref_src=twsrc%5Etfw" data-text="#{@draft.title}" data-lang="ja" data-show-count="false"
+                script async src="https://platform.twitter.com/widgets.js" charset="utf-8"
+                span#fb-root
+                script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v7.0" nonce="1LcNqGCu"
+                span.fb-share-button data-href = request.url data-layout="button" data-size="small" 
+                    a.fb-xfbml-parse-ignore target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
         .article-body
             = @draft.body.html_safe

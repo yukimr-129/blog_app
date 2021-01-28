@@ -6,9 +6,9 @@
         p.article-nickname
             span.nickname = Profile.find_by(user_id: article.user_id).nickname
             span
-                / span
-                /     i.far.fa-thumbs-up
-                /         span.impressions-like = article.likes.count
-                / span
-                /     i.fas.fa-eye
-                /         span.impressions-watch = article.impressions.size
+                span
+                    i.far.fa-thumbs-up
+                        span.impressions-like = article.likes.count
+                span
+                    i.fas.fa-eye
+                        span.impressions-watch = article.impressions.size

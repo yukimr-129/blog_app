@@ -1,16 +1,14 @@
 - actionName = "#{controller.controller_name}##{controller.action_name}"
 
-== render "layouts/header"
-
 - if actionName == "articles#new"
     - actionPath = articles_path
 - elsif actionName == "articles#edit"
     - actionPath = article_path
 - elsif actionName == "drafts#edit"
     - actionPath = draft_path
-    - article = @draft
+    - @article = @draft
 
-#header action="#{controller.controller_name}##{controller.action_name}" thumbnail=@article.thumbnail
+#header action="#{controller.controller_name}##{controller.action_name}" thumbnail = @article.thumbnail
 = form_with model: article, url: actionPath, local: true, id: "article_form" do |f|
     .main-wrapper
         .top-wrapper

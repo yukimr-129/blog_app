@@ -6,4 +6,6 @@ class Article < ApplicationRecord
 
     mount_uploader :thumbnail, ImageUploader
     is_impressionable counter_cache: true
+
+    has_many :likes, dependent: :destroy
 end

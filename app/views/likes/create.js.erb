@@ -1,0 +1,1 @@
+$("#like_<%= @article.id %>").html("<%= escape_javascript(render 'layouts/like', article: @article) %>");

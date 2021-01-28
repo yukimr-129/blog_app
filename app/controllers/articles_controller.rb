@@ -1,7 +1,7 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: %i(show edit update destroy)
   impressionist actions: [:show], unique: [:impressionable_id, :ip_address]
-  
+
   def index
   end
 
@@ -32,6 +32,7 @@ class ArticlesController < ApplicationController
     #タグ保存処理
     tag = params[:article][:tag]
     tag_array(tag).each do |t|
+      #find_or_initialize_byに変更
       unless model[:tag].find_by(name: t).present?
         model[:tag].create(name: t)
       end
