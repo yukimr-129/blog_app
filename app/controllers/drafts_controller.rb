@@ -40,6 +40,7 @@ class DraftsController < ApplicationController
 
         tag = tag_array(params[:draft][:tag])
         tag.each do |p|
+            #find_or_initialize_byに変更
             unless model[:tag].find_by(name: p).present?
                 model[:tag].create(name: p)
             end

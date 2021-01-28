@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'likes/create'
+  get 'likes/destroy'
   get 'articles/index'
   devise_for :users, controllers: {
     registrations: 'users/registrations'
@@ -18,7 +20,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :draft, only: %i(index show edit update destroy)
+  resources :likes, only: %i(destroy) do
+    member do
+      post "create", as: :like_create
+    end
+  end
+
+  resources :drafts, only: %i(index show edit update destroy)
   resources :tags, only: %i(show)
   resources :users, only: %i(show)
 

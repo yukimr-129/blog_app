@@ -4,10 +4,10 @@
         .title
             - if controller.controller_name == "users"
                 i.fas.fa-square
-                    投稿した記事
+                span 投稿した記事
             - elsif controller.controller_name == "drafts"
                 i.fas.fa-square
-                    下書き一覧
+                span 下書き一覧
         .articles
             - main.where(user_id: @user.id).sort_by{|a| a.created_at}.reverse.each do |a|
                 .article
@@ -24,10 +24,10 @@
                             .impressions
                                 span
                                     i.far.fa-thumbs-up
-                                        span.impressions-like = a.likes.count
+                                    span.impressions-like = a.likes.count
                                 span
                                     i.fas.fa-eye
-                                        span.impressions-watch = a.impressions.size
+                                    span.impressions-watch = a.impressions.size
                             .date = a.created_at.strftime("%Y/%m/%d")
                     - else
                         = link_to a.title, draft_path(a), class:"article-title", data: {"turbolinks": false}
